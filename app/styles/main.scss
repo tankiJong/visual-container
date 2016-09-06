@@ -1,0 +1,72 @@
+$c-size: 30px;
+$mg: 10px;
+$count: 30;
+
+$y: 10;
+$x: 20;
+
+//#1c242b
+$bg-color: #1c242b;
+.container{
+  width: 100%;
+  height: $count * ($c-size + $mg) + 100px;
+  position: relative;
+  background-color: $bg-color;
+  border: $bg-color solid 30px;
+  box-sizing: border-box;
+  //filter: blur(2px) contrast(4);
+}
+
+.unit{
+  position: absolute;
+  width: $c-size;
+  height: $c-size;
+  background-color: #eee;
+  transition: all 0.5s;
+  //transition: height 0.3s, background-color 0.3s;
+  //border-radius: 15px;
+}
+
+
+@for $i from 0 through $x - 1{
+  .c-#{$i}{
+    left: $i*($c-size+$mg);
+    &.tail{
+      height: $c-size - $mg;
+      @if($i % 2 == 0){
+        margin-top: $mg;
+      }
+    }
+  }
+}
+
+@for $i from 0 through $y - 1{
+  .r-#{$i}{
+    top: $i*$c-size;
+  }
+}
+
+
+@for $i from 0 through $y - 1 {
+  @if $i % 2 == 0 {
+    .c-#{$i}.r-0:not(.tail){
+      width: $c-size+ $mg !important;
+    }
+    .c-#{$i}.r-0.tail{
+      height: $c-size !important;
+    }
+  } @else {
+    .c-#{$i}.r-#{$y - 1}:not(.tail){
+      width: $c-size+ $mg !important;
+    }
+    .c-#{$i}.r-#{$y - 1}.tail{
+      height: $c-size;
+    }
+  }
+}
+
+@for $i from 0 through 20 {
+  .type-#{$i} {
+    background-color: darken(#f1f2f3, 4% * $i);
+  }
+}
