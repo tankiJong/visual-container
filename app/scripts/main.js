@@ -372,7 +372,7 @@ new Vue({
         console.log(Object.keys(dd).length);
         this.container = d.length;
         if(!created){
-          if(Object.keys(dd).length === 9){
+          if(Object.keys(dd).length > 0){
             this.getImages(draw(d));
             created = true;
           }

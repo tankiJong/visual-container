@@ -27,7 +27,7 @@ var DEFAULT_ENV = {
   APP_ENV: '"local"',
   WIDGET_ID: '"38cf7132"',
   WIDGET_JS: '"widget.daovoice.co/widget/38cf7132.js"',
-  API_URL: '"http://management-api.daovoice.co/v1"',
+  API_URL: '"http://192.168.2.142:10000"',
   RTM_URL: '"http://rtm.daovoice.co"',
   DAO_AUTH: '"http://account.daocloud.co/signin"',
   AUTH_SIGN_UP: '"http://account.daocloud.co/signup"',
