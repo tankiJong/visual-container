@@ -345,7 +345,7 @@ new Vue({
       this.displayVote = !this.displayVote;
     },
     fetchData(){
-      return this.$http.get('${ API_URL }/stat').then(d => d.data);
+      return this.$http.get(`${ API_URL }/stat`).then(d => d.data);
     },
     getImages(svgs){
       console.log(svgs);
