@@ -1,72 +1,146 @@
-$c-size: 30px;
-$mg: 10px;
-$count: 30;
+$color-collection: (#8442cf, #e48846,  #d0406e, #6ee1ac, #8ee92c,  #3d2ce0, #68ae5b, #41acfa, #e48006);
+$container-height: 484px;
+$body-mg: 10px;
 
-$y: 10;
-$x: 20;
-
-//#1c242b
-$bg-color: #1c242b;
-.container{
+$point-svg: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><circle fill="#4d5762" cx="24.62" cy="24.17" r="16.33" /><circle fill="#895bff" cx="24.62" cy="24.17" r="7.57" /></svg>';
+svg{
   width: 100%;
-  height: $count * ($c-size + $mg) + 100px;
-  position: relative;
-  background-color: $bg-color;
-  border: $bg-color solid 30px;
-  box-sizing: border-box;
-  //filter: blur(2px) contrast(4);
-}
-
-.unit{
+  height: $container-height;
   position: absolute;
-  width: $c-size;
-  height: $c-size;
-  background-color: #eee;
-  transition: all 0.5s;
-  //transition: height 0.3s, background-color 0.3s;
-  //border-radius: 15px;
+
+  @for $i from 1 through 9 {
+    &:nth-child(#{$i}){
+        polyline{
+          stroke: nth($color-collection, $i);
+        }
+    }
+  }
+
+  polyline{
+    transition: all 3s ease;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 10;
+    fill: transparent;
+  }
 }
 
+@mixin relative-persent-width($percent, $mg){
+  width: calc(#{$percent} - #{$mg*2});
+  margin: $mg;
+}
 
-@for $i from 0 through $x - 1{
-  .c-#{$i}{
-    left: $i*($c-size+$mg);
-    &.tail{
-      height: $c-size - $mg;
-      @if($i % 2 == 0){
-        margin-top: $mg;
+@mixin relative-persent-height($percent, $mg){
+  height: calc(#{$percent} - #{$mg*2});
+  margin: $mg;
+}
+
+.container{
+  // background: #141521;
+  // background-image:
+  //    linear-gradient(#141521 14px,transparent 0),
+  //    linear-gradient(90deg,#173864 1px,transparent 0);
+  // background-size:15px 15px,15px 15px;
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 24.5" style="enable-background:new 0 0 25 24.5;" xml:space="preserve"><circle fill="#25456D" cx="12.5" cy="12.2" r="3.9"/></svg>');
+  background-size: 25px 24.5px;
+  position: relative;
+  height: $container-height;
+  @include relative-persent-width(100%, 30px);
+}
+
+.container-wrapper{
+  @include relative-persent-width(100%, $body-mg);
+  margin: $body-mg;
+  border: #8b8f95 solid 1px;
+  background-color: #141521;
+}
+body{
+  background-color: #3d444f;
+  position: absolute;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#container-bg polyline{
+  stroke: #585859;
+  stroke-dasharray: 0, 20;
+}
+
+.data{
+  @include relative-persent-width(100%, $body-mg);
+  position: relative;
+  max-height: 350px;
+  height: 300px;
+}
+
+.card {
+  display: inline-block;
+  border: #8b8f95 solid 1px;
+  box-sizing: border-box;
+  position: relative;
+  color: #fff;
+  vertical-align: top;
+  height: 100%;
+
+  .head{
+    height: 38px;
+    background-color: #444d5a;
+    line-height: 38px;
+    padding-left: 40px;
+  }
+
+  .content{
+    background-color: #3b4451;
+
+  }
+}
+
+.summary .content{
+  padding: 40px;
+
+  ul{
+    list-style: none;
+    position: relative;
+    padding-left: 21px;
+    li{
+      font-size: 16px;
+      line-height: 16px;
+      margin-bottom: 20px;
+      position: relative;
+      width: 50%;
+      &:before{
+        content: '';
+        background: url('#{$point-svg}');
+        width: 19px;
+        height: 19px;
+        position: absolute;
+        left: -24px;
+        top: -1px;
+      }
+
+      span.value{
+        float: right;
       }
     }
   }
 }
 
-@for $i from 0 through $y - 1{
-  .r-#{$i}{
-    top: $i*$c-size;
-  }
+.top-list .content{
+  padding: 20px;
+  overflow: auto;
+  max-height: 215px;
 }
 
-
-@for $i from 0 through $y - 1 {
-  @if $i % 2 == 0 {
-    .c-#{$i}.r-0:not(.tail){
-      width: $c-size+ $mg !important;
-    }
-    .c-#{$i}.r-0.tail{
-      height: $c-size !important;
-    }
-  } @else {
-    .c-#{$i}.r-#{$y - 1}:not(.tail){
-      width: $c-size+ $mg !important;
-    }
-    .c-#{$i}.r-#{$y - 1}.tail{
-      height: $c-size;
-    }
-  }
+.summary{
+  width: calc(40% - #{$body-mg/2});
+  margin: 0;
+  margin-right: $body-mg/2;
 }
 
-@for $i from 0 through 20 {
-  .type-#{$i} {
-    background-color: darken(#f1f2f3, 4% * $i);
-  }
+.top-list{
+  width: calc(60% - #{$body-mg/2});
+  margin: 0;
+  margin-left: $body-mg/2;
 }

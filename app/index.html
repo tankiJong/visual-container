@@ -23,18 +23,21 @@
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="container">
-
-<!--       div.unit.r-$.c-1*10
-      div.unit.r-$@-.c-2*10
-      div.unit.r-$.c-3*10
-      div.unit.r-$@-.c-4*10
-      div.unit.r-$.c-5*10
-      div.unit.r-$@-.c-6*10
-      div.unit.r-$.c-7*10
-      div.unit.r-$@-.c-8*10
-      div.unit.r-$.c-9*10
-      div.unit.r-$@-.c-10*10 -->
+    <div class="container-wrapper">
+      <div class="container">
+      </div>
+    </div>
+    <div class="data" @click="toggleVote()">
+      <div class="summary card">
+        <div class="head">概览</div>
+        <div class="content">
+          <summary :container="container"></summary>
+        </div>
+      </div><div class="top-list card">
+        <div class="head">镜像</div>
+        <image-stack class="content" :images="images"></image-stack>
+      </div>
+      <vote v-if="displayVote"></vote>
     </div>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
