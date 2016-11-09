@@ -18,7 +18,7 @@ WORKDIR /app
 COPY ./package.json /app/
 COPY ./bower.json /app/
 
-RUN npm install --production && bower install --allow-root
+RUN npm install && bower install --allow-root
 RUN npm install gulp
 
 COPY . /app/
