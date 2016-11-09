@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import  { api } from '../constant';
 export default {
   data: ()=>({
     op1: '50%',
@@ -25,7 +26,7 @@ export default {
   }),
   methods:{
     fetchData(){
-      return this.$http.get('http://54.249.38.5:8081/result').then(d=> d.data);
+      return this.$http.get(`${ api }:5003/result`).then(d=> d.data);
     },
   },
   created(){

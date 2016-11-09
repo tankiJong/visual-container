@@ -14,10 +14,9 @@ import VueResource from 'vue-resource';
 import summary from './components/summary.vue';
 import imageStack from './components/image-stack.vue';
 import vote from './components/vote.vue';
+import { api } from './constant';
 
-const { API_URL } = process.env;
-
-console.log('url: ', API_URL);
+console.log('url: ', api);
 
 class point{
   constructor(x,y){
@@ -122,8 +121,10 @@ let containers = {};
 
 
 
-const [ strokeOffset ]  = [ 22 ];
+const [ strokeOffset ]  = [ 20 ];
 const [ maxMem ] = [ 8000 ];
+
+const hash = name => name.replace(/[^a-zA-Z0-9]/ig,'-').slice(1);
 
 function draw(_data){
   _data = _data.sort((a,b) => a.id < b.id);
@@ -283,7 +284,7 @@ const createWS = () => {
 }
 
 const createStream = () => {
-  const stream = new Stream(`${API_URL}/stat`);
+  const stream = new Stream(`${api}:10000/stat`);
   stream.get().notify(d => {
     const dd = JSON.parse(evt.data);
       dd.mem = bytesToMB(data.mem);
@@ -345,7 +346,7 @@ new Vue({
       this.displayVote = !this.displayVote;
     },
     fetchData(){
-      return this.$http.get(`${ API_URL }/stat`).then(d => d.data);
+      return this.$http.get(`${ api }:10000/stat`).then(d => d.data);
     },
     getImages(svgs){
       console.log(svgs);
@@ -365,7 +366,7 @@ new Vue({
         const dd = {};
         d = d.map(e => {
           e.mem = bytesToMB(e.mem);
-          e.type = e.type.replace(/\/|#|\.|:/g, '-')
+          e.type = hash(e.type);
           dd[e.type] = true;
           return e;
         });

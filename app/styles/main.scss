@@ -1,4 +1,4 @@
-$color-collection: (#8442cf, #e48846,  #d0406e, #6ee1ac, #8ee92c,  #3d2ce0, #68ae5b, #41acfa, #e48006);
+$color-collection: (#8442cf, #e48846,  #d0406e, #6ee1ac, #8ee92c,  #3d2ce0, #68ae5b, #41acfa, #e48006, #8442cf, #e48846,  #d0406e, #6ee1ac, #8ee92c,  #3d2ce0, #68ae5b, #41acfa, #e48006, #8442cf, #e48846,  #d0406e, #6ee1ac, #8ee92c,  #3d2ce0, #68ae5b, #41acfa, #e48006);
 $container-height: 484px;
 $body-mg: 10px;
 
@@ -8,7 +8,7 @@ svg{
   height: $container-height;
   position: absolute;
 
-  @for $i from 1 through 9 {
+  @for $i from 1 through 20 {
     &:nth-child(#{$i}){
         polyline{
           stroke: nth($color-collection, $i);
