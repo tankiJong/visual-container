@@ -15,6 +15,10 @@ import summary from './components/summary.vue';
 import imageStack from './components/image-stack.vue';
 import vote from './components/vote.vue';
 
+const { API_URL } = process.env;
+
+console.log('url: ', API_URL);
+
 class point{
   constructor(x,y){
     this.x = x;
@@ -279,7 +283,7 @@ const createWS = () => {
 }
 
 const createStream = () => {
-  const stream = new Stream('http://54.249.38.5:10000/stat');
+  const stream = new Stream(`${API_URL}/stat`);
   stream.get().notify(d => {
     const dd = JSON.parse(evt.data);
       dd.mem = bytesToMB(data.mem);
@@ -341,7 +345,7 @@ new Vue({
       this.displayVote = !this.displayVote;
     },
     fetchData(){
-      return this.$http.get('http://54.249.38.5:10000/stat').then(d => d.data);
+      return this.$http.get('${ API_URL }/stat').then(d => d.data);
     },
     getImages(svgs){
       console.log(svgs);

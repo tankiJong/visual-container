@@ -6,10 +6,55 @@ const del = require('del');
 const conf = require('./gulp/conf');
 const wiredep = require('wiredep').stream;
 const wpConfig = require('./webpack.config');
+const webpack = require('webpack');
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
+
+function extend(target) {
+  var sources = [].slice.call(arguments, 1);
+  sources.forEach(function(source) {
+    for (var prop in source) {
+      target[prop] = source[prop];
+    }
+  });
+
+  return target;
+}
+
+
+var DEFAULT_ENV = {
+  APP_ENV: '"local"',
+  WIDGET_ID: '"38cf7132"',
+  WIDGET_JS: '"widget.daovoice.co/widget/38cf7132.js"',
+  API_URL: '"http://management-api.daovoice.co/v1"',
+  RTM_URL: '"http://rtm.daovoice.co"',
+  DAO_AUTH: '"http://account.daocloud.co/signin"',
+  AUTH_SIGN_UP: '"http://account.daocloud.co/signup"',
+  AUTH_SIGN_IN: '"http://account.daocloud.co/signin"',
+  AUTH_LOG_OUT: '"http://account.daocloud.co/logout"',
+  COOKIE_DOMAIN: '"localhost"',
+  SENTRY_JS: '"https://e5cba35e05984ff1ab70e683fc6b019f@app.getsentry.com/63006"',
+  PRICING_URL: '"http://management-api.daovoice.co/plans-api/v1"',
+};
+
+
 console.log(wpConfig, $.webpack);
+var CURRENT_ENV = extend({}, DEFAULT_ENV);
+
+Object.keys(CURRENT_ENV)
+.forEach(function(k) {
+  if (process.env[k]) {
+    CURRENT_ENV[k] = JSON.stringify(process.env[k]);
+  }
+});
+
+wpConfig.plugins = [
+  new webpack.DefinePlugin({
+    'process.env': CURRENT_ENV,
+  }),
+  new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn|en/),
+];
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')

@@ -15,15 +15,14 @@ EXPOSE 80
 
 WORKDIR /app
 
-COPY ./package.json /app
-COPY ./bower.json /app
+COPY ./package.json /app/
+COPY ./bower.json /app/
 
 RUN npm install --production && bower install --allow-root
 
-COPY . /
-
+COPY . /app/
 ENV APP_ENV=production
-ENV API_URL=https://management-api.daovoice.io/v1
+ENV API_URL=https://127.0.0.1
 
 RUN gulp build && \
     cp -r dist/* /usr/share/nginx/html/ && \
